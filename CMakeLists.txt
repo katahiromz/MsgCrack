@@ -7,50 +7,21 @@ cmake_minimum_required(VERSION 2.10)
 # set new policy
 cmake_policy(SET CMP0054 NEW)
 
-# project name and language
-#project(MsgCrack C)
-project(MsgCrack CXX)
+# project name and languages
+project(MsgCrack CXX RC)
 
 # set output directory (build/)
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
-##############################################################################
-
 # include directories
-include_directories(../../include)
+include_directories(./include)
 
 # Unicode support
 add_definitions(-DUNICODE -D_UNICODE)
 
-# set source files
-set(SOURCES MsgCrack.cpp)
-
-# Win32 or not?
-if (CMAKE_HOST_WIN32)
-    # enable Win32 resource
-    ENABLE_LANGUAGE(RC)
-
-    # Win32
-    add_executable(MsgCrack WIN32 ${SOURCES} MsgCrack_res.rc)
-else()
-    message(FATAL_ERROR "To build this project, use Win32 C++ compiler")
-endif()
-
-# link
-target_link_libraries(MsgCrack comctl32)
-
-##############################################################################
 # do statically link
-
-set_target_properties(MsgCrack PROPERTIES LINK_DEPENDS_NO_SHARED 1)
-set_target_properties(MsgCrack PROPERTIES LINK_SEARCH_START_STATIC 1)
-set_target_properties(MsgCrack PROPERTIES LINK_SEARCH_END_STATIC 1)
-
-set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-set(BUILD_SHARED_LIBRARIES OFF)
-
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     # using Clang
     SET(CMAKE_C_FLAGS "-static -s")
@@ -76,3 +47,7 @@ elseif (MSVC)
 endif()
 
 ##############################################################################
+
+# MsgCrack.exe
+add_executable(MsgCrack WIN32 MsgCrack.cpp MsgCrack_res.rc)
+target_link_libraries(MsgCrack comctl32)
