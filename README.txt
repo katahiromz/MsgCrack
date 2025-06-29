@@ -7,7 +7,7 @@ This application is useful for Win32 API programming.
 Supported Platforms
 -------------------
 
-Windows XP/2003/Vista/7/8/10
+Windows 2000/XP/2003/Vista/7/10/11
 
 
 Explanation
